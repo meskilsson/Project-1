@@ -12,7 +12,8 @@ body {
 h1,
 h2,
 h3,
-.name {
+.name,
+.btn {
     font-family: 'Raleway', sans-serif;
     font-weight: 700;
     line-height: 1.2;
@@ -136,7 +137,9 @@ h3,
 }
 
 .sidebar li {
+
     margin-bottom: 0.5rem;
+    text-decoration: underline;
 }
 
 .navbar {
@@ -191,6 +194,41 @@ h3,
     width: 100%;
 }
 
+.dropdown-menu {
+    list-style: none;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem 0 0;
+    background: rgba(0, 0, 0, 0.05);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+
+.dropdown-menu.active {
+    max-height: 200px;
+    opacity: 1;
+}
+
+.dropdown-toggle {
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.dropdown-toggle:hover {
+    background: white;
+    color: #1a1a1a;
+}
 
 
 @media (max-width: 768px) {

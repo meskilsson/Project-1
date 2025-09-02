@@ -1,8 +1,15 @@
 
+document.addEventListener("DOMContentLoaded", () => {
 
-document.querySelector(".btn").addEventListener("click", () => {
-    window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: smooth
+    const toggle = document.querySelector(".dropdown-toggle");
+
+    const menu = document.querySelector(".dropdown-menu");
+
+    toggle.addEventListener("click", () => {
+        menu.classList.toggle("active");
+
+        toggle.textContent = menu.classList.contains("active")
+            ? "Intressen ▴"
+            : "Intressen ▾"
     });
 });
