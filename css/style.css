@@ -1,8 +1,21 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
     background-color: #111;
+    font-weight: 400;
+    color: #f0f0f0;
+    background-color: #111;
+}
+
+h1,
+h2,
+h3,
+.name {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
 }
 
 .container {
@@ -188,7 +201,8 @@ body {
         gap: 1rem;
     }
 
-    .hero-text, .sidebar {
+    .hero-text,
+    .sidebar {
         text-align: center;
     }
 }
@@ -208,41 +222,48 @@ body {
         line-height: 1.1;
         margin: 0.5rem 0;
     }
+
     .hero-text p {
         font-size: clamp(12px, 3.5vw, 16px);
         margin-bottom: 0.5rem;
         opacity: 0.9;
     }
+
     .btn {
         font-size: 0.9rem;
         padding: 0.5rem 0.9rem;
         display: inline-block;
     }
+
     .sidebar {
         position: static !important;
         margin-top: 0.75rem;
         z-index: auto;
     }
+
     .sidebar h2 {
         font-size: clamp(18px, 5.5vw, 22px);
         margin-bottom: 0.5rem;
     }
+
     .sidebar li {
         line-height: 1.3;
         margin: 0.15rem 0;
     }
+
     .navbar {
         gap: 0.5rem;
         font-size: 0.9rem;
         padding-top: env(safe-area-inset-top);
     }
-    
+
     .hero-bg {
         background-size: 50vh, cover;
         background-position: bottom center, center;
         min-height: 100svh;
     }
+
     .hero-bg::before {
-        background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.25));
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.25));
     }
 }
