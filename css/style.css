@@ -213,6 +213,7 @@ h3,
 
 .dropdown-toggle {
     display: inline-block;
+    position: relative;
     cursor: pointer;
     user-select: none;
     border: 2px solid white;
@@ -225,11 +226,34 @@ h3,
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
+.dropdown-toggle::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) translateX(calc(50% + 20px));
+    animation: orbit 3s linear infinite;
+}
+
 .dropdown-toggle:hover {
     background: white;
     color: #1a1a1a;
 }
 
+
+@keyframes orbit {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg) translate(calc(50% + 20px));
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg) translate(calc(50% + 20px));
+    }
+}
 
 @media (max-width: 768px) {
     .container {
