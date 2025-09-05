@@ -58,7 +58,7 @@ function measure() {
     const viewport = document.querySelector('.carousel-viewport');
     if (viewport && cards[0]) {
         const inner = cards[0].getBoundingClientRect().width;
-        viewport.style.width = `${inner}px`
+        //viewport.style.width = `${inner}px`
     }
 
 
@@ -75,7 +75,7 @@ toggleBtn.addEventListener('click', () => {
 
     toggleBtn.textContent = isOpen ? 'Intressen ▴' : 'Intressen ▾';
 
-    if (isOpen()) {
+    if (isOpen) {
         measure();
         startAutoPlay();
     } else {
@@ -110,6 +110,10 @@ document.addEventListener('keydown', (e) => {
     if (!panel.classList.contains('active')) return;
     if (e.key === 'ArrowRight') goNext();
     if (e.key === 'ArrowLeft') goPrev();
+});
+
+window.addEventListener('resize', () => {
+    measure();
 });
 
 function afterImagesLoad() {
