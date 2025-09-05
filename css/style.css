@@ -1,3 +1,7 @@
+:root {
+    --carousel-w: 420px;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -22,7 +26,7 @@ h3,
 .container {
     display: flex;
     position: relative;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 2rem;
     padding: clamp(2rem, 5vw, 10rem);
@@ -32,7 +36,14 @@ h3,
 
 
 .hero-text {
-    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: -4vh;
+}
+
+.hero-text .btn {
+    display: inline-block;
 }
 
 .name {
@@ -40,7 +51,7 @@ h3,
     position: relative;
     overflow: hidden;
     font-size: clamp(2rem, 5vw, 4rem);
-    margin-bottom: 1rem;
+    margin-bottom: 0.15rem;
     color: white;
     background: linear-gradient(90deg, white 0%, white 100%);
     background-size: 0% 100%;
@@ -64,8 +75,10 @@ h3,
 }
 
 .hero-text p {
+    margin: 0.1rem 0 0.35rem;
     font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
+
 
 .hero-text,
 .sidebar {
@@ -128,7 +141,11 @@ h3,
 }
 
 .sidebar {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 2rem;
+    margin-top: 2rem;
 }
 
 .sidebar ul {
@@ -165,6 +182,9 @@ h3,
 
 .nav-links a {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     color: white;
     text-decoration: none;
     transition: color 0.3s;
@@ -191,6 +211,17 @@ h3,
 
 .nav-links a:hover::before {
     width: 100%;
+}
+
+.nav-links a svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.icon {
+    margin-right: 2px;
+    vertical-align: middle;
 }
 
 .dropdown-menu {
@@ -242,6 +273,7 @@ h3,
     background: conic-gradient(from var(--angle),
             transparent 0deg 210deg,
             white 360deg 360deg);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -303,10 +335,10 @@ h3,
 }
 
 .card {
-    width: 300px;
-    min-width: 300px;
+    width: var(--carousel-w, 300px);
+    min-width: var(--carousel-w, 300px);
     background: #222;
-    margin: 0 0.4rem;
+    margin: 0;
     border-radius: 12px;
     text-align: center;
     padding: 0;
@@ -352,7 +384,7 @@ h3,
 }
 
 .carousel-viewport {
-    width: 300px;
+    width: var(--carousel-w);
     height: 230px;
     overflow: hidden;
     border-radius: 12px;
@@ -387,6 +419,10 @@ h3,
 
 
 @media (max-width: 480px) {
+    :root {
+        --carousel-w: 300px;
+    }
+
     .container {
         display: grid;
         grid-template-columns: 1fr;
@@ -427,11 +463,6 @@ h3,
         margin-bottom: 0.5rem;
     }
 
-    .sidebar li {
-        line-height: 1.3;
-        margin: 0.15rem 0;
-    }
-
     .navbar {
         gap: 0.5rem;
         font-size: 0.9rem;
@@ -449,8 +480,8 @@ h3,
     }
 
     .card {
-        width: 260px;
-        min-width: 260px;
+        width: var(--carousel-w);
+        min-width: var(--carousel-w);
         margin: 0;
         padding: 0;
         border-radius: 12px;
@@ -487,7 +518,7 @@ h3,
     }
 
     .carousel-viewport {
-        width: 260px;
+        width: var(--carousel-w, 300px);
         overflow: hidden;
         border-radius: 12px;
     }
