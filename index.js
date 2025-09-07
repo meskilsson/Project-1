@@ -1,154 +1,160 @@
+function initCarousel(root) {
 
-const toggleBtn = document.getElementById('interests-toggle');
-const panel = document.getElementById('interests-panel');
-const track = document.getElementById('carousel-track');
 
-const prevBtn = panel.querySelector('.carousel-btn.prev');
-const nextBtn = panel.querySelector('.carousel-btn.next');
+    const toggleBtn = document.getElementById('interests-toggle');
+    const panel = document.getElementById('interests-panel');
+    const track = document.getElementById('carousel-track');
 
-const AUTOPLAY_INTERVAL_MS = 3500;
-let autoplayTimer = null;
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const prevBtn = panel.querySelector('.carousel-btn.prev');
+    const nextBtn = panel.querySelector('.carousel-btn.next');
 
-let currentIndex = 0;
-let cardWidth = 0;
-let cards = [];
+    const AUTOPLAY_INTERVAL_MS = 3500;
+    let autoplayTimer = null;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-function isPanelOpen() {
-    return panel.classList.contains('active');
-}
+    let currentIndex = 0;
+    let cardWidth = 0;
+    let cards = [];
 
-function startAutoPlay() {
-    if (reducedMotion.matches || !isPanelOpen() || cards.length === 0) return;
+    function isPanelOpen() {
+        return panel.classList.contains('active');
+    }
 
-    stopAutoPlay();
+    function startAutoPlay() {
+        if (reducedMotion.matches || !isPanelOpen() || cards.length === 0) return;
 
-    autoplayTimer = setInterval(() => {
-        if (!isPanelOpen() || reducedMotion.matches) {
-            console.log('AUTOplay: STOP (closed or reduced-motion)');
-            stopAutoPlay();
-            return;
+        stopAutoPlay();
+
+        autoplayTimer = setInterval(() => {
+            if (!isPanelOpen() || reducedMotion.matches) {
+                console.log('AUTOplay: STOP (closed or reduced-motion)');
+                stopAutoPlay();
+                return;
+            }
+            console.log('Autoplay: TICK -> goNext');
+            goNext();
+        }, AUTOPLAY_INTERVAL_MS);
+    }
+
+    function stopAutoPlay() {
+        if (autoplayTimer !== null) {
+            clearInterval(autoplayTimer);
+            autoplayTimer = null;
         }
-        console.log('Autoplay: TICK -> goNext');
-        goNext();
-    }, AUTOPLAY_INTERVAL_MS);
-}
-
-function stopAutoPlay() {
-    if (autoplayTimer !== null) {
-        clearInterval(autoplayTimer);
-        autoplayTimer = null;
-    }
-}
-
-
-function measure() {
-
-    cards = Array.from(track.querySelectorAll('.card'));
-    if (cards.length === 0) return;
-
-
-    const first = cards[0];
-    const styles = window.getComputedStyle(first);
-    const marginLeft = parseFloat(styles.marginLeft) || 0;
-    const marginRight = parseFloat(styles.marginRight) || 0;
-    cardWidth = first.getBoundingClientRect().width + marginLeft + marginRight;
-
-
-    const viewport = document.querySelector('.carousel-viewport');
-    if (viewport && cards[0]) {
-        const inner = cards[0].getBoundingClientRect().width;
-        //viewport.style.width = `${inner}px`
     }
 
 
-    currentIndex = Math.max(0, Math.min(currentIndex, cards.length - 1));
-    updateCarousel();
-}
+    function measure() {
 
-toggleBtn.addEventListener('click', () => {
-    panel.classList.toggle('active');
+        cards = Array.from(track.querySelectorAll('.card'));
+        if (cards.length === 0) return;
 
-    const isOpen = panel.classList.contains('active');
-    toggleBtn.setAttribute('aria-expanded', String(isOpen));
-    panel.hidden = !isOpen;
 
-    toggleBtn.textContent = isOpen ? 'Intressen ▴' : 'Intressen ▾';
+        const first = cards[0];
+        const styles = window.getComputedStyle(first);
+        const marginLeft = parseFloat(styles.marginLeft) || 0;
+        const marginRight = parseFloat(styles.marginRight) || 0;
+        cardWidth = first.getBoundingClientRect().width + marginLeft + marginRight;
 
-    if (isOpen) {
+
+        const viewport = document.querySelector('.carousel-viewport');
+        if (viewport && cards[0]) {
+            const inner = cards[0].getBoundingClientRect().width;
+            //viewport.style.width = `${inner}px`
+        }
+
+
+        currentIndex = Math.max(0, Math.min(currentIndex, cards.length - 1));
+        updateCarousel();
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        panel.classList.toggle('active');
+
+        const isOpen = panel.classList.contains('active');
+        toggleBtn.setAttribute('aria-expanded', String(isOpen));
+        panel.hidden = !isOpen;
+
+        toggleBtn.textContent = isOpen ? 'Intressen ▴' : 'Intressen ▾';
+
+        if (isOpen) {
+            measure();
+            startAutoPlay();
+        } else {
+            stopAutoPlay();
+        }
+    });
+
+
+
+    function goNext() {
+        if (cards.length === 0) return;
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCarousel();
+    }
+
+    function goPrev() {
+        if (cards.length === 0) return;
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updateCarousel();
+    }
+
+    function updateCarousel() {
+        const offset = -(currentIndex * cardWidth);
+        track.style.transform = `translateX(${offset}px)`;
+    }
+
+    window.addEventListener('resize', () => {
         measure();
-        startAutoPlay();
-    } else {
-        stopAutoPlay();
+    });
+
+
+    if (nextBtn) nextBtn.addEventListener('click', goNext);
+    if (prevBtn) prevBtn.addEventListener('click', goPrev);
+
+
+    document.addEventListener('keydown', (e) => {
+        if (!panel.classList.contains('active')) return;
+        if (e.key === 'ArrowRight') goNext();
+        if (e.key === 'ArrowLeft') goPrev();
+    });
+
+    function afterImagesLoad() {
+        measure();
+        if (isPanelOpen()) startAutoPlay();
     }
-});
 
-
-
-function goNext() {
-    if (cards.length === 0) return;
-    currentIndex = (currentIndex + 1) % cards.length;
-    updateCarousel();
-}
-
-function goPrev() {
-    if (cards.length === 0) return;
-    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-    updateCarousel();
-}
-
-function updateCarousel() {
-    const offset = -(currentIndex * cardWidth);
-    track.style.transform = `translateX(${offset}px)`;
-}
-
-if (nextBtn) nextBtn.addEventListener('click', goNext);
-if (prevBtn) prevBtn.addEventListener('click', goPrev);
-
-
-document.addEventListener('keydown', (e) => {
-    if (!panel.classList.contains('active')) return;
-    if (e.key === 'ArrowRight') goNext();
-    if (e.key === 'ArrowLeft') goPrev();
-});
-
-window.addEventListener('resize', () => {
-    measure();
-});
-
-function afterImagesLoad() {
-    measure();
-    if (isPanelOpen()) startAutoPlay();
-}
-
-if (document.readyState === 'complete') {
-    afterImagesLoad();
-} else {
-    window.addEventListener('load', afterImagesLoad);
-}
-
-panel.addEventListener('mouseenter', stopAutoPlay);
-panel.addEventListener('mouseleave', () => {
-    startAutoPlay();
-});
-
-panel.addEventListener('focusin', stopAutoPlay);
-panel.addEventListener('focusout', () => {
-    if (!panel.contains(document.activeElement)) startAutoPlay();
-});
-
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        stopAutoPlay();
+    if (document.readyState === 'complete') {
+        afterImagesLoad();
     } else {
-        startAutoPlay();
+        window.addEventListener('load', afterImagesLoad);
     }
-});
 
-reducedMotion.addEventListener('change', () => {
-    if (reducedMotion.matches) {
-        stopAutoPlay();
-    } else {
+    panel.addEventListener('mouseenter', stopAutoPlay);
+    panel.addEventListener('mouseleave', () => {
         startAutoPlay();
-    }
-});
+    });
+
+    panel.addEventListener('focusin', stopAutoPlay);
+    panel.addEventListener('focusout', () => {
+        if (!panel.contains(document.activeElement)) startAutoPlay();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoPlay();
+        } else {
+            startAutoPlay();
+        }
+    });
+
+    reducedMotion.addEventListener('change', () => {
+        if (reducedMotion.matches) {
+            stopAutoPlay();
+        } else {
+            startAutoPlay();
+        }
+    });
+}
+
+document.querySelectorAll('.carousel-widget').forEach(initCarousel);
