@@ -1,9 +1,9 @@
 function initCarousel(root) {
 
 
-    const toggleBtn = document.getElementById('interests-toggle');
-    const panel = document.getElementById('interests-panel');
-    const track = document.getElementById('carousel-track');
+    const toggleBtn = root.querySelector('.dropdown-toggle');
+    const panel = root.querySelector('.dropdown-panel');
+    const track = root.querySelector('.carousel-track');
 
     const prevBtn = panel.querySelector('.carousel-btn.prev');
     const nextBtn = panel.querySelector('.carousel-btn.next');
@@ -57,7 +57,7 @@ function initCarousel(root) {
         cardWidth = first.getBoundingClientRect().width + marginLeft + marginRight;
 
 
-        const viewport = document.querySelector('.carousel-viewport');
+        const viewport = root.querySelector('.carousel-viewport');
         if (viewport && cards[0]) {
             const inner = cards[0].getBoundingClientRect().width;
             //viewport.style.width = `${inner}px`
@@ -104,9 +104,7 @@ function initCarousel(root) {
         track.style.transform = `translateX(${offset}px)`;
     }
 
-    window.addEventListener('resize', () => {
-        measure();
-    });
+    window.addEventListener('resize', measure);
 
 
     if (nextBtn) nextBtn.addEventListener('click', goNext);

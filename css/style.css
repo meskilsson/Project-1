@@ -1,6 +1,7 @@
 :root {
-    --carousel-w: 420px;
+    --carousel-w: 600px;
 }
+
 
 body {
     margin: 0;
@@ -27,7 +28,7 @@ h3,
     display: flex;
     position: relative;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 2rem;
     padding: clamp(2rem, 5vw, 10rem);
     position: relative;
@@ -114,6 +115,13 @@ h3,
     color: #1a1a1a;
 }
 
+.hero-text-cv h1,
+h2,
+h3,
+p {
+    font-family: arial, sans-serif;
+}
+
 .hero-bg {
     background-image: url("../img/cvBildd.png"), url("../img/dark-sandy.jpg");
     position: relative;
@@ -126,14 +134,18 @@ h3,
     color: rgb(255, 255, 255);
 }
 
-.hero-bg::before {
+
+.hero-bg::before,
+.hero-bg-cv::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2));
+    z-index: 0;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
 }
 
 .main-content {
@@ -143,9 +155,15 @@ h3,
 .sidebar {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    margin-right: 2rem;
-    margin-top: 2rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-left: clamp(2rem, 6vw, 8rem);
+    margin-right: 0;
+    margin-top: 0;
+}
+
+.sidebar .carousel-widget:nth-of-type(2) {
+    margin-top: clamp(12rem, 36vh, 32rem);
 }
 
 .sidebar ul {
@@ -223,6 +241,7 @@ h3,
     margin-right: 2px;
     vertical-align: middle;
 }
+
 
 .dropdown-menu {
     list-style: none;
@@ -309,16 +328,19 @@ h3,
     align-items: flex-start;
     flex-direction: column;
     width: fit-content;
-    max-height: 0;
-    margin: .5rem 0 0;
-    overflow: hidden;
     opacity: 0;
     transition: max-height 0.5s ease, opacity 0.3s ease;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 20;
 }
 
+
 .dropdown-panel.active {
-    max-height: 420px;
     opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
 }
 
 .carousel {
@@ -334,6 +356,12 @@ h3,
     transition: transform 0.4s ease;
 }
 
+.carousel-widget {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+
 .card {
     width: var(--carousel-w, 300px);
     min-width: var(--carousel-w, 300px);
@@ -348,7 +376,7 @@ h3,
 
 .card img {
     width: 100%;
-    height: 180px;
+    height: 240px;
     object-fit: cover;
     border-radius: 12px 12px 0 0;
     display: block;
@@ -385,7 +413,7 @@ h3,
 
 .carousel-viewport {
     width: var(--carousel-w);
-    height: 230px;
+    height: 290px;
     overflow: hidden;
     border-radius: 12px;
 }
@@ -400,6 +428,89 @@ h3,
 .sidebar .dropdown-toggle {
     align-self: flex-start;
 }
+
+
+/* cv.html styles */
+
+
+
+.hero-bg-cv {
+    background-image: url("../img/dark-sandy.jpg");
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    color: rgb(255, 255, 255);
+}
+
+.hero-text-cv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 2rem 2rem 2rem;
+    height: 80vh;
+    width: 80vh;
+    border: 2px solid #5f5f5f;
+    border-radius: 12px;
+    background-color: #1b1b1b;
+    line-height: 1.6;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+.hero-text-cv h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero-text-cv h2 {
+    font-size: 1.4rem;
+    margin: 1.5rem 0 0.5rem;
+    border-bottom: 3px solid #666;
+    padding-bottom: 0.25rem;
+}
+
+.hero-text-cv h3 {
+    margin: 1rem 0 0.25rem;
+    font-size: 1rem;
+    border-bottom: 1px solid #666;
+}
+
+.hero-text-cv p {
+    margin: 0 0 1rem;
+    font-size: 0.4rem;
+    color: #ccc;
+}
+
+
+
+@keyframes textReveal {
+    from {
+        background-size: 0% 100%;
+    }
+
+    to {
+        background-size: 100% 100%;
+    }
+}
+
+.hero-text-cv p {
+    margin: 0.1rem 0 0.35rem;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+
+.hero-text-cv {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s ease forwards;
+}
+
+
+
+
 
 
 
@@ -475,10 +586,6 @@ h3,
         min-height: 100svh;
     }
 
-    .hero-bg::before {
-        background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.25));
-    }
-
     .card {
         width: var(--carousel-w);
         min-width: var(--carousel-w);
@@ -506,7 +613,7 @@ h3,
     .dropdown-toggle {
         display: inline-block;
         width: auto;
-        margin: 0.2rem auto 0;
+        margin: 0.25rem auto 0;
         padding: 0.6rem 1rem;
         text-align: left;
     }
@@ -514,7 +621,6 @@ h3,
     .dropdown-panel {
         align-items: center;
         margin: .5rem auto 0;
-
     }
 
     .carousel-viewport {
