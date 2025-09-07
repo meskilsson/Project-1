@@ -141,10 +141,10 @@ h3,
 }
 
 .hero-text-cv h1,
-h2,
-h3,
-p,
-li {
+.hero-text-cv h2,
+.hero-text-cv h3,
+.hero-text-cv p,
+.hero-text-cv li {
     font-family: arial, sans-serif;
     list-style: none;
 }
@@ -477,15 +477,36 @@ li {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     padding: 2rem 2rem 2rem 2rem;
+<<<<<<< HEAD
     width: clamp(320px, 40vw, 720px);
     max-width: 100%;
     min-height: clamp(480px, 65vh, 900px);
+=======
+
+    height: auto;
+    width: min(90vw, 720px);
+    max-width: 100%;
+
+>>>>>>> 153e81449fca402f9dd4694f6dedf3c6e25b1563
     border: 2px solid #5f5f5f;
     border-radius: 12px;
     background-color: #1b1b1b;
     line-height: 1.6;
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+.hero-text-cv ul {
+    margin: 0 0 .5rem 0;
+    max-width: 100%;
+}
+
+.hero-text-cv li {
+    margin: 0 0 0.5rem 0;
+    max-width: 100%;
 }
 
 .hero-text-cv h1 {
@@ -512,17 +533,6 @@ li {
     color: #ccc;
 }
 
-
-
-@keyframes textReveal {
-    from {
-        background-size: 0% 100%;
-    }
-
-    to {
-        background-size: 100% 100%;
-    }
-}
 
 .hero-text-cv p {
     margin: 0.1rem 0 0.35rem;
