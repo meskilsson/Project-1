@@ -75,7 +75,10 @@ function initCarousel(root) {
         toggleBtn.setAttribute('aria-expanded', String(isOpen));
         panel.hidden = !isOpen;
 
-        toggleBtn.textContent = isOpen ? 'Intressen ▴' : 'Intressen ▾';
+        const baseLabel = toggleBtn.dataset.label || toggleBtn.textContent.replace(/[▴▾]/g, '').trim();
+        toggleBtn.dataset.label = baseLabel;
+
+        toggleBtn.textContent = isOpen ? `${baseLabel} ▴` : `${baseLabel} ▾`;
 
         if (isOpen) {
             measure();
